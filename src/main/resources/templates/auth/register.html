@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skydash Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/static/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/static/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/static/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/vendors/mdi/css/materialdesignicons.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/static/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/static/images/favicon.png"/>
+</head>
+
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div class="row w-100 mx-0">
+                <div class="col-lg-8 mx-auto">
+                    <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                        <div class="brand-logo">
+                            <img src="/static/images/login_page.png" alt="logo">
+                        </div>
+                        <h4>Здравствуйте! Добро пожаловать</h4>
+                        <h6 class="font-weight-light">Заполните анкету и отправьте запрос</h6>
+                        <form th:action="@{/auth/register}" method="post">
+                            <div class="d-flex justify-content-center mt-5">
+                                <h3 class="card-title">
+                                    Анкета
+                                </h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="firstname">Имя</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="firstname" id="firstname"
+                                                   placeholder="Имя" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="lastname">Фамилия</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="lastname" id="lastname"
+                                                   placeholder="Фамилия" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="phoneNumber">Номер телефона</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="phoneNumber" id="phoneNumber"
+                                                   placeholder="Номер телефона" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="gender">Пол</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="gender" id="gender">
+                                                <option value="0" selected>Муж.</option>
+                                                <option value="1">Жен.</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="email">E-Mail</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" name="email" id="email"
+                                                   placeholder="E-Mail" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="dateOfBirth">День рождения</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth"
+                                                   placeholder="День рождения" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="username">Логин</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="username" id="username"
+                                                   placeholder="Логин" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="password">Пароль</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" name="password" id="password"
+                                                   placeholder="Пароль" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="confirmPassword">Повторите
+                                            Пароль</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" name="confirmPassword"
+                                                   id="confirmPassword" placeholder="Повторите Пароль" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="branch">Филиал</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="branchId" id="branch">
+                                                <option th:value="${branch.id}" th:each="branch : ${branches}" th:text="'г. ' + ${branch.town} + ' (' + ${branch.name} + ')'">г. Бишкек (Бекжан-1)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Создать</button>
+                            <button type="reset" class="btn btn-light">Сбросить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="/static/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="/static/js/off-canvas.js"></script>
+<script src="/static/js/hoverable-collapse.js"></script>
+<script src="/static/js/template.js"></script>
+<script src="/static/js/settings.js"></script>
+<!-- endinject -->
+</body>
+
+</html>

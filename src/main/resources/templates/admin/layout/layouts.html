@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/static/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/static/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/static/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/vendors/mdi/css/materialdesignicons.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/static/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/static/images/favicon.png"/>
+</head>
+<body>
+<nav th:fragment="header" class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="/main"><img src="/static/images/logo.png" class="mr-2"
+                                                                  alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="/main"><img src="/static/images/logo-mini.png"
+                                                                  alt="logo"/></a>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="icon-menu"></span>
+        </button>
+        <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator" id="notificationDropdown" href="/notifications">
+                    <i class="icon-bell mx-0"></i>
+                    <span class="count" hidden id="notificationHaving"></span>
+                </a>
+            </li>
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                    <img src="/static/images/faces/profile.png" alt="profile"/>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                     aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="/main/profile">
+                        <i class="ti-user text-primary"></i>
+                        Профиль
+                    </a>
+                    <a class="dropdown-item" href="/logout">
+                        <i class="ti-power-off text-primary"></i>
+                        Выйти
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                data-toggle="offcanvas">
+            <span class="icon-menu"></span>
+        </button>
+    </div>
+</nav>
+<nav class="sidebar sidebar-offcanvas" id="sidebar" th:fragment="sidebar">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/olympiads">
+                <i class="mdi mdi-chart-bubble menu-icon"></i>
+                <span class="menu-title">Олимпиады
+                            </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/participants">
+                <i class="mdi mdi-account-multiple menu-icon"></i>
+                <span class="menu-title">Участники</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/levels">
+                <i class="mdi mdi-layers menu-icon"></i>
+                <span class="menu-title">Уровни</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/temp-users">
+                <i class="mdi mdi-clipboard-arrow-down menu-icon"></i>
+                <span class="menu-title">Запросы
+                            </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/trainer">
+                <i class="mdi mdi-puzzle menu-icon"></i>
+                <span class="menu-title">Тренажёр
+                            </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<footer class="footer" th:fragment="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023.
+                            Академия Роста. Все права защищены</span>
+    </div>
+</footer>
+</body>
+</html>
+
