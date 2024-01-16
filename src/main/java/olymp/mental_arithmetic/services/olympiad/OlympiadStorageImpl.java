@@ -2,8 +2,10 @@ package olymp.mental_arithmetic.services.olympiad;
 
 import olymp.mental_arithmetic.model.entities.Level;
 import olymp.mental_arithmetic.model.entities.Olympiad;
+import olymp.mental_arithmetic.model.entities.Tour;
 import olymp.mental_arithmetic.repositories.LevelRepository;
 import olymp.mental_arithmetic.repositories.OlympiadRepository;
+import olymp.mental_arithmetic.repositories.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,13 @@ public class OlympiadStorageImpl implements OlympiadStorage {
 
     private final OlympiadRepository olympiadRepository;
     private final LevelRepository levelRepository;
+    private final TourRepository tourRepository;
 
     @Autowired
-    public OlympiadStorageImpl(OlympiadRepository olympiadRepository, LevelRepository levelRepository) {
+    public OlympiadStorageImpl(OlympiadRepository olympiadRepository, LevelRepository levelRepository, TourRepository tourRepository) {
         this.olympiadRepository = olympiadRepository;
         this.levelRepository = levelRepository;
+        this.tourRepository = tourRepository;
     }
 
     @Override
@@ -54,5 +58,25 @@ public class OlympiadStorageImpl implements OlympiadStorage {
     @Override
     public void deleteLevel(Long levelId) {
         levelRepository.deleteById(levelId);
+    }
+
+    @Override
+    public void saveTour(Tour tour) {
+        tourRepository.save(tour);
+    }
+
+    @Override
+    public Tour getTourById(Long id) {
+        return tourRepository.findById(id).orElseThrow(() -> new RuntimeException("Тур не найден!"));
+    }
+
+    @Override
+    public void deleteTourById(Long id) {
+        tourRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Tour> findAllToursByOlympiad(Olympiad olympiad) {
+        return tourRepository.findByOlympiad(olympiad);
     }
 }

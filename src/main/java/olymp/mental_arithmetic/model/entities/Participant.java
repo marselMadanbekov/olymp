@@ -3,17 +3,19 @@ package olymp.mental_arithmetic.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
-@Entity
 @Data
-public class Tour {
+@Entity
+public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
 
     @ManyToOne
-    private Olympiad olympiad;
+    private Tour tour;
+    @ManyToOne
+    private Level level;
+
+
+    @OneToOne
+    private User user;
 }

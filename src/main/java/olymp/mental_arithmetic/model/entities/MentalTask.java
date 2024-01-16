@@ -18,6 +18,6 @@ public class MentalTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ElementCollection
-    private List<Integer> taskEntry = new ArrayList<>();
-    private Integer answer;
+    private List<Double> taskEntry = new ArrayList<>();
+    private Double answer;
 }

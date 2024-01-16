@@ -3,6 +3,7 @@ package olymp.mental_arithmetic.controllers.admin;
 
 import olymp.mental_arithmetic.model.entities.Olympiad;
 import olymp.mental_arithmetic.model.entities.OlympiadExercise;
+import olymp.mental_arithmetic.model.entities.Tour;
 import olymp.mental_arithmetic.services.exercise.OlympiadExerciseStorage;
 import olymp.mental_arithmetic.services.olympiad.OlympiadService;
 import olymp.mental_arithmetic.services.olympiad.OlympiadStorage;
@@ -46,6 +47,9 @@ public class AdminOlympiadsController {
                                   Model model){
         Olympiad olympiad = olympiadStorage.getOlympiadById(olympiadId);
         List<OlympiadExercise> olympiadExercises = olympiadExerciseStorage.findByOlympiad(olympiad);
+        List<Tour> tours = olympiadStorage.findAllToursByOlympiad(olympiad);
+
+        model.addAttribute("tours", tours);
         model.addAttribute("exercises", olympiadExercises);
         model.addAttribute("olympiad", olympiad);
         return "admin/olympiad-details";

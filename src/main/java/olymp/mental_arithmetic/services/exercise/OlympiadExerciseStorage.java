@@ -9,4 +9,6 @@ public interface OlympiadExerciseStorage {
     void save(OlympiadExercise olympiadExercise);
     OlympiadExercise findById(Long id);
     List<OlympiadExercise> findByOlympiad(Olympiad olympiad);
+
+    void deleteById(Long exerciseId);
 }

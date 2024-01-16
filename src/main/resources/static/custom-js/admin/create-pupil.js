@@ -1,27 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const updateUserdataForm = document.getElementById('update-user-data-form');
+    const createPupilForm = document.getElementById('create-pupil-form');
 
-    updateUserdataForm.addEventListener('submit', function (e){
+    createPupilForm.addEventListener('submit', function (e){
         e.preventDefault();
-        document.getElementById("create-button").disabled=true;
-        document.getElementById("spinner").hidden=false;
-        if(confirm("Вы уверены что хотите изменить данные пользователя?")) {
+        document.getElementById("progress-spinner").hidden = false;
+        if(confirm("Вы уверены что хотите создать участника?")) {
             let formData = new FormData(this);
             $.ajax({
-                url: "/admin/participants/update-user-data",
+                url: "/admin/participants/create-participant",
                 type: "POST",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    document.getElementById("spinner").hidden = true;
+                    document.getElementById("progress-spinner").hidden = true;
                     alert(response.message);
                     window.location.reload();
                 },
                 error: function (xhr) {
-                    document.getElementById("spinner").hidden = true;
-                    document.getElementById("create-button").disabled=false;
-
+                    document.getElementById("progress-spinner").hidden = true;
                     try {
                         const errorData = JSON.parse(xhr.responseText);
                         if (errorData.hasOwnProperty("error")) {

@@ -31,10 +31,6 @@ public class User implements UserDetails {
     private String password;
     private Boolean active;
     private Role role;
-
-    @ManyToOne
-    private Level level;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(role.toString()));

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -36,6 +37,9 @@ public class MentalExercisesExcelResolver {
 
                 if (rowEmpty) {
                     if (inTable) {
+                        currentTableTasks.forEach(task -> {
+                            task.setAnswer(task.getTaskEntry().stream().mapToDouble(Double::doubleValue).sum());
+                        });
                         tasks.addAll(currentTableTasks);
                         inTable = false;
                     }
@@ -54,13 +58,16 @@ public class MentalExercisesExcelResolver {
                 int colNum = 0;
                 for (Cell cell : row) {
                     if (cell.getCellType() == CellType.NUMERIC) {
-                        currentTableTasks.get(colNum).getTaskEntry().add((int) cell.getNumericCellValue());
+                        currentTableTasks.get(colNum).getTaskEntry().add(cell.getNumericCellValue());
                         colNum++;
                     }
                 }
             }
 
             if (currentTableTasks != null) {
+                currentTableTasks.forEach(task -> {
+                    task.setAnswer(task.getTaskEntry().stream().mapToDouble(Double::doubleValue).sum());
+                });
                 tasks.addAll(currentTableTasks);
             }
             file.close();

@@ -20,14 +20,5 @@ public class Olympiad {
     private Long id;
     private String name;
     private Date startDate;
-    @OneToMany
-    private List<Tour> tours;
-
     private Double costOfParticipation;
-
-    public int getTotalParticipantsCount(){
-        return tours.stream()
-                .mapToInt(Tour::countOfParticipants)
-                .sum();
-    }
 }
