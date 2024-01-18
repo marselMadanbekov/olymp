@@ -136,10 +136,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label" for="branch">Филиал</label>
+                                        <label class="col-sm-3 col-form-label" for="levelId">Уровень</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="branchId" id="branch">
-                                                <option th:value="${branch.id}" th:each="branch : ${branches}" th:text="'г. ' + ${branch.town} + ' (' + ${branch.name} + ')'">г. Бишкек (Бекжан-1)</option>
+                                            <select class="form-control" name="levelId" id="levelId">
+                                                <option value="0">Не выбран</option>
+                                                <option th:value="${level.id}" th:each="level : ${levels}" th:text="${level.name}"></option>
                                             </select>
                                         </div>
                                     </div>

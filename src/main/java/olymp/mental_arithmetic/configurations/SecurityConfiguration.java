@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(SecurityConstants.ERROR_PAGES).permitAll()
                         .requestMatchers(SecurityConstants.STATIC_RESOURCES_URL).permitAll()
+                        .requestMatchers(SecurityConstants.AUTH_URLS).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login").permitAll()

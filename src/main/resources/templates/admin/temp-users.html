@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skydash Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/static/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/static/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/static/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/vendors/mdi/css/materialdesignicons.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/static/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/static/images/favicon.png"/>
+</head>
+
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="~{/admin/layout/layouts::header}"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:replace="~{/admin/layout/layouts::sidebar}"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row mb-3">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Запросы на регистрацию</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 th:if="${tempUsers.getContent().size() == 0}">Запросов нет</h5>
+                                <div class="table-responsive" th:if="${tempUsers.getContent().size() > 0}">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                Имя
+                                            </th>
+                                            <th>
+                                                Фамилия
+                                            </th>
+                                            <th>
+                                                Номер телефона
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                            <th>
+                                                Статус
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="user : ${tempUsers.getContent()}">
+                                            <td>
+                                                <a
+                                                   th:href="'/admin/temp-users/temp-user-details?userId=' + ${user.id}" th:text="${user.user.firstname}">
+                                                </a>
+                                            </td>
+                                            <td th:text="${user.user.lastname}"></td>
+                                            <td th:text="${user.user.phone}"></td>
+                                            <td th:text="${user.user.email}"></td>
+                                            <td>
+                                                <label class="badge badge-success" th:if="${user.user.active}">Активен</label>
+                                                <label class="badge badge-secondary" th:if="${!user.user.active}">Не активен</label>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <nav aria-label="...">
+                                        <ul class="pagination">
+                                            <li th:if="${tempUsers.number > 0}" class="page-item">
+                                                <a class="page-link"
+                                                   th:href="'/admin/temp-users?page=0'"><<</a>
+                                            </li>
+                                            <li th:if="${tempUsers.number > 0}" class="page-item">
+                                                <a th:text="${tempUsers.number}" class="page-link"
+                                                   th:href="'/admin/temp-users?page=' + ${tempUsers.number - 1}"></a>
+                                            </li>
+                                            <li class="page-item active"><a class="page-link" href="#"
+                                                                            th:text="${tempUsers.number + 1}"></a>
+                                            </li>
+                                            <li th:if="${tempUsers.number + 1 < tempUsers.totalPages}" class="page-item">
+                                                <a href="#" class="page-link" th:text="${tempUsers.number + 2}"
+                                                   th:href="'/admin/temp-users?page=' + ${tempUsers.number + 1}"></a>
+                                            </li>
+                                            <li th:if="${tempUsers.number + 2 < tempUsers.totalPages}" class="page-item">
+                                                <a class="page-link" href="#" th:text="${tempUsers.number + 3}"
+                                                   th:href="'/admin/temp-users?page=' + ${tempUsers.number + 2}"></a>
+                                            </li>
+                                            <li th:if="${tempUsers.number + 1 < tempUsers.totalPages}" class="page-item">
+                                                <a class="page-link"
+                                                   th:href="'/admin/temp-users?page=' + ${tempUsers.totalPages - 1}">>></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023.
+                            Академия Роста. Все права защищены</span>
+                </div>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+<script src="/static/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="/static/vendors/chart.js/Chart.min.js"></script>
+<script src="/static/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/static/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="/static/js/dataTables.select.min.js"></script>
+
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="/static/js/off-canvas.js"></script>
+<script src="/static/js/hoverable-collapse.js"></script>
+<script src="/static/js/template.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/static/js/dashboard.js"></script>
+<!-- End custom js for this page-->
+<script src="/static/custom-js/general/check-notifications.js"></script>
+
+</body>
+
+</html>

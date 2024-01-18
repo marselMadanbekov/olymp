@@ -2,7 +2,9 @@ package olymp.mental_arithmetic.services.user;
 
 import olymp.mental_arithmetic.model.entities.Level;
 import olymp.mental_arithmetic.model.entities.Participant;
+import olymp.mental_arithmetic.model.entities.TempUser;
 import olymp.mental_arithmetic.model.entities.User;
+import olymp.mental_arithmetic.model.enums.Role;
 import olymp.mental_arithmetic.model.utils.UserCreate;
 import olymp.mental_arithmetic.model.utils.UserdataUpdate;
 import olymp.mental_arithmetic.services.olympiad.OlympiadStorage;
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
         user.setLastname(userCreate.getLastname());
         user.setEmail(userCreate.getEmail());
         user.setActive(true);
+        user.setRole(Role.ROLE_PARTICIPANT);
         user.setPhone(userCreate.getPhoneNumber());
         user.setUsername(userCreate.getUsername());
         user.setPassword(passwordEncoder.encode(userCreate.getPassword()));
@@ -80,5 +83,50 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteParticipantById(Long participantId) {
         userStorage.deleteParticipantById(participantId);
+    }
+
+    @Override
+    public void createTempUser(UserCreate userCreate) {
+        Level level = userCreate.getLevelId().equals(0L) ? null : olympiadStorage.getLevelById(userCreate.getLevelId());
+
+        User user = new User();
+        user.setFirstname(userCreate.getFirstname());
+        user.setLastname(userCreate.getLastname());
+        user.setEmail(userCreate.getEmail());
+        user.setActive(true);
+        user.setRole(Role.ROLE_TEMP_USER);
+        user.setPhone(userCreate.getPhoneNumber());
+        user.setUsername(userCreate.getUsername());
+        user.setPassword(passwordEncoder.encode(userCreate.getPassword()));
+
+        userStorage.saveUser(user);
+
+        TempUser tempUser = new TempUser();
+        tempUser.setUser(user);
+        tempUser.setLevel(level);
+
+        userStorage.saveTempUser(tempUser);
+    }
+
+    @Override
+    @Transactional
+    public void applyTempUser(Long tempUserId) {
+        TempUser tempUser = userStorage.getTempUserById(tempUserId);
+
+        tempUser.getUser().setRole(Role.ROLE_PARTICIPANT);
+        userStorage.saveUser(tempUser.getUser());
+
+        Participant participant = new Participant();
+        participant.setLevel(tempUser.getLevel());
+        participant.setUser(tempUser.getUser());
+
+        userStorage.saveParticipant(participant);
+        userStorage.deleteTempUserById(tempUser.getId());
+    }
+
+    @Override
+    public void rejectTempUser(Long tempUserId) {
+        TempUser tempUser = userStorage.getTempUserById(tempUserId);
+        userStorage.deleteUserById(tempUser.getUser().getId());
     }
 }

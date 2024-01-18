@@ -9,4 +9,10 @@ public interface UserService {
     void updateUserdata(UserdataUpdate update);
 
     void deleteParticipantById(Long participantId);
+
+    void createTempUser(UserCreate userCreate);
+
+    void applyTempUser(Long tempUserId);
+
+    void rejectTempUser(Long tempUserId);
 }

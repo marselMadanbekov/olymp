@@ -1,9 +1,11 @@
 package olymp.mental_arithmetic.services.user;
 
 import olymp.mental_arithmetic.model.entities.Participant;
+import olymp.mental_arithmetic.model.entities.TempUser;
 import olymp.mental_arithmetic.model.entities.Tour;
 import olymp.mental_arithmetic.model.entities.User;
 import olymp.mental_arithmetic.repositories.ParticipantRepository;
+import olymp.mental_arithmetic.repositories.TempUserRepository;
 import olymp.mental_arithmetic.repositories.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +18,11 @@ public class UserStorageImpl implements UserStorage {
 
     private final UserRepository userRepository;
     private final ParticipantRepository participantRepository;
-
-    public UserStorageImpl(UserRepository userRepository, ParticipantRepository participantRepository) {
+    private final TempUserRepository tempUserRepository;
+    public UserStorageImpl(UserRepository userRepository, ParticipantRepository participantRepository, TempUserRepository tempUserRepository) {
         this.userRepository = userRepository;
         this.participantRepository = participantRepository;
+        this.tempUserRepository = tempUserRepository;
     }
 
     @Override
@@ -65,7 +68,32 @@ public class UserStorageImpl implements UserStorage {
     public void deleteParticipantById(Long participantId) {
         Participant participant = getParticipantById(participantId);
         userRepository.delete(participant.getUser());
-        participantRepository.delete(participant);
+    }
+
+    @Override
+    public void saveTempUser(TempUser tempUser) {
+        tempUserRepository.save(tempUser);
+    }
+
+    @Override
+    public Page<TempUser> findTempUsersByPage(Integer page) {
+        Pageable pageable = PageRequest.of(page, 20);
+        return tempUserRepository.findAll(pageable);
+    }
+
+    @Override
+    public TempUser getTempUserById(Long userId) {
+        return tempUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("Пользователь не найден!"));
+    }
+
+    @Override
+    public void deleteTempUserById(Long id) {
+        tempUserRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
     }
 
 }

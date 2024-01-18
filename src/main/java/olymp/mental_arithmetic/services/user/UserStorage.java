@@ -1,6 +1,7 @@
 package olymp.mental_arithmetic.services.user;
 
 import olymp.mental_arithmetic.model.entities.Participant;
+import olymp.mental_arithmetic.model.entities.TempUser;
 import olymp.mental_arithmetic.model.entities.Tour;
 import olymp.mental_arithmetic.model.entities.User;
 import org.springframework.data.domain.Page;
@@ -22,4 +23,14 @@ public interface UserStorage {
     Participant getParticipantById(Long participantId);
 
     void deleteParticipantById(Long participantId);
+
+    void saveTempUser(TempUser tempUser);
+
+    Page<TempUser> findTempUsersByPage(Integer page);
+
+    TempUser getTempUserById(Long userId);
+
+    void deleteTempUserById(Long id);
+
+    void deleteUserById(Long id);
 }

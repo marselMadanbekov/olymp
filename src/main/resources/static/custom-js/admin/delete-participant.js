@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append("participantId", pupilId);
 
             $.ajax({
-                url: "/admin/participants/delete-participants",
+                url: "/admin/participants/delete-participant",
                 type: "POST",
                 data: formData,
                 processData: false,
