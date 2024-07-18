@@ -73,6 +73,9 @@
                                             <th>
                                                 Уровень
                                             </th>
+                                            <th>
+                                                Олимпиада(Тур)
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -82,6 +85,10 @@
                                             <td th:text="${participant.user.lastname}"></td>
                                             <td th:if="${participant.level != null}" th:text="${participant.level.name}"></td>
                                             <td th:if="${participant.level == null}" >
+                                                <p class="badge badge-danger">Не указан</p>
+                                            </td>
+                                            <td th:if="${participant.tour != null}" th:text="${participant.tour.name}"></td>
+                                            <td th:if="${participant.tour == null}" >
                                                 <p class="badge badge-danger">Не указан</p>
                                             </td>
                                             <td class="justify-content-between">
@@ -151,7 +158,7 @@
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="/static/custom-js/general/check-notifications.js"></script>
-<script src="/static/custom-js/admin/delete-exercise.js"></script>
+<script src="/custom-js/admin/delete-tour.js"></script>
 <!-- End custom js for this page-->
 </body>
 

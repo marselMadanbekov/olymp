@@ -23,4 +23,6 @@ public interface OlympiadStorage {
     void deleteTourById(Long id);
 
     List<Tour> findAllToursByOlympiad(Olympiad olympiad);
+
+    List<Tour> findAllTours();
 }

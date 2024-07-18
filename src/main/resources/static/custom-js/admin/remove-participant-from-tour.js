@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const deleteExerciseButtons = document.querySelectorAll('.delete-exercise');
+    const removeParticipantButtons = document.querySelectorAll('.remove-participant');
 
-    deleteExerciseButtons.forEach(function (item){
+    removeParticipantButtons.forEach(function (item){
         item.addEventListener("click",function (event){
             event.preventDefault();
 
-            if(confirm("Вы уверены что хотите удалить задания?")){
+            if(confirm("Вы уверены что хотите отчислить из этого тура участника?")){
                 let formData = new FormData();
-                let exerciseId = item.getAttribute("exerciseId");
-                formData.append("exerciseId", exerciseId);
+                let participantId = item.getAttribute("participantId");
+                formData.append("participantId", participantId);
 
                 $.ajax({
-                    url: "/admin/exercises/delete-exercise",
+                    url: "/admin/tours/remove-participant",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.location.reload();
                     },
                     error: function (xhr) {
-                        document.getElementById("spinner").hidden = true;
                         try {
                             const errorData = JSON.parse(xhr.responseText);
                             if (errorData.hasOwnProperty("error")) {

@@ -1,5 +1,6 @@
 package olymp.mental_arithmetic.controllers.admin;
 
+import olymp.mental_arithmetic.model.entities.Level;
 import olymp.mental_arithmetic.model.entities.Olympiad;
 import olymp.mental_arithmetic.model.entities.Participant;
 import olymp.mental_arithmetic.model.entities.Tour;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -33,7 +35,16 @@ public class AdminTourController {
         this.userStorage = userStorage;
     }
 
+    @GetMapping("/add-participants-by-level")
+    public String addByLevel(@RequestParam Long tourId,
+                             Model model){
+        Tour tour = olympiadStorage.getTourById(tourId);
+        List<Level> levels = olympiadStorage.findAllLevels();
 
+        model.addAttribute("tour", tour);
+        model.addAttribute("levels", levels);
+        return "admin/add-participants-by-level";
+    }
     @GetMapping("/create-tour")
     public String tours(@RequestParam Long olympiadId,
                         Model model){
@@ -52,6 +63,19 @@ public class AdminTourController {
         return "admin/tour-details";
     }
 
+    @PostMapping("/add-by-level")
+    public ResponseEntity<Map<String,String>> addByLevel(@RequestParam Long tourId,
+                                                         @RequestParam Long levelId){
+        Map<String,String> response = new HashMap<>();
+        try{
+            olympiadService.addParticipantsToTourByLevel(tourId,levelId);
+            response.put("message", "Все пользователи успешно добавлены!");
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
     @PostMapping("/delete-tour")
     public ResponseEntity<Map<String,String>> deleteTour(@RequestParam Long tourId){
         Map<String,String> response = new HashMap<>();
@@ -64,13 +88,26 @@ public class AdminTourController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+    @PostMapping("/remove-participant")
+    public ResponseEntity<Map<String,String>> removeParticipant(@RequestParam Long participantId){
+        Map<String,String> response = new HashMap<>();
+        try{
+            olympiadService.removeParticipantFromTour(participantId);
+            response.put("message","Участник успешно отчислен!");
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
     @PostMapping("/create-tour")
     public ResponseEntity<Map<String,String>> createTour(@RequestParam Long olympiadId,
+                                                         @RequestParam String name,
                                                          @RequestParam String startDateTime,
                                                          @RequestParam String endDateTime){
         Map<String,String> response = new HashMap<>();
         try{
-            olympiadService.createTour(olympiadId,startDateTime,endDateTime);
+            olympiadService.createTour(olympiadId,name,startDateTime,endDateTime);
             response.put("message", "Тур успешно создан!");
             return ResponseEntity.ok(response);
         }catch (Exception e){

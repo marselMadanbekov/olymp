@@ -4,31 +4,26 @@ import olymp.mental_arithmetic.model.entities.Level;
 import olymp.mental_arithmetic.model.utils.UserCreate;
 import olymp.mental_arithmetic.services.olympiad.OlympiadStorage;
 import olymp.mental_arithmetic.services.user.UserService;
-import olymp.mental_arithmetic.services.user.UserStorage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("")
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserStorage userStorage;
     private final OlympiadStorage olympiadStorage;
     private final UserService userService;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserStorage userStorage, OlympiadStorage olympiadStorage, UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.userStorage = userStorage;
+    public AuthController(OlympiadStorage olympiadStorage, UserService userService) {
         this.olympiadStorage = olympiadStorage;
         this.userService = userService;
     }
@@ -52,13 +47,15 @@ public class AuthController {
 
 
     @PostMapping("/auth/register")
-    public String register(@ModelAttribute UserCreate userCreate) {
+    public ResponseEntity<Map<String, String>> register(@ModelAttribute UserCreate userCreate) {
+        Map<String, String> response = new HashMap<>();
         try {
             userService.createTempUser(userCreate);
-            return "redirect:/login";
+            response.put("message", "Запрос на регистрацию успешно отправлен!");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/error?message1=" + e.getMessage();
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
     }
 }

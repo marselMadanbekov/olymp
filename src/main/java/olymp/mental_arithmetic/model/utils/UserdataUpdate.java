@@ -12,4 +12,5 @@ public class UserdataUpdate {
     private String dateOfBirth;
     private String password;
     private String confirmPassword;
+    private Long levelId;
 }

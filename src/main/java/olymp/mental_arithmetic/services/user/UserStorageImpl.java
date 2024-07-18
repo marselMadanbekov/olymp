@@ -1,9 +1,6 @@
 package olymp.mental_arithmetic.services.user;
 
-import olymp.mental_arithmetic.model.entities.Participant;
-import olymp.mental_arithmetic.model.entities.TempUser;
-import olymp.mental_arithmetic.model.entities.Tour;
-import olymp.mental_arithmetic.model.entities.User;
+import olymp.mental_arithmetic.model.entities.*;
 import olymp.mental_arithmetic.repositories.ParticipantRepository;
 import olymp.mental_arithmetic.repositories.TempUserRepository;
 import olymp.mental_arithmetic.repositories.UserRepository;
@@ -12,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserStorageImpl implements UserStorage {
@@ -94,6 +93,16 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Participant> findParticipantsByLevel(Level level) {
+        return participantRepository.findByLevel(level);
+    }
+
+    @Override
+    public void saveAllParticipants(List<Participant> participants) {
+        participantRepository.saveAll(participants);
     }
 
 }

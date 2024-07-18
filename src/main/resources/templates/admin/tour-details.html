@@ -52,7 +52,12 @@
                                 <div class="d-flex justify-content-between">
                                     <h4 class="card-title">Участники</h4>
                                     <div>
-                                        <a class="btn btn-sm btn-primary">Добавить</a>
+                                        <a class="btn btn-sm btn-primary"
+                                           th:href="'/admin/tours/add-participants?tourId=' + ${tour.id}">Добавить
+                                            конкретно</a>
+                                        <a class="btn btn-sm btn-primary"
+                                           th:href="'/admin/tours/add-participants-by-level?tourId=' +${tour.id}">Добавить
+                                            по уровням</a>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -80,10 +85,12 @@
                                             <td th:text="${participant.user.lastname}"></td>
                                             <td th:text="${participant.level.name}"></td>
                                             <td class="justify-content-between">
-                                                <a class="btn btn-sm btn-info" th:href="'/admin/tours/tour-details?tourId=' + ${tour.id}">
+                                                <a class="btn btn-sm btn-info"
+                                                   th:href="'/admin/participants/participant-details?participantId=' + ${participant.id}">
                                                     <i class="mdi mdi-eye"></i>
                                                 </a>
-                                                <button class="btn btn-sm btn-danger delete-tour" th:attr="tourId=${tour.id}">
+                                                <button class="btn btn-sm btn-danger remove-participant"
+                                                        th:attr="participantId=${participant.id}">
                                                     <i class="mdi mdi-delete"></i>
                                                 </button>
                                             </td>
@@ -105,15 +112,18 @@
                                             <li class="page-item active"><a class="page-link" href="#"
                                                                             th:text="${participants.number + 1}"></a>
                                             </li>
-                                            <li th:if="${participants.number + 1 < participants.totalPages}" class="page-item">
+                                            <li th:if="${participants.number + 1 < participants.totalPages}"
+                                                class="page-item">
                                                 <a href="#" class="page-link" th:text="${participants.number + 2}"
                                                    th:href="'/admin/tours/tour-details?tourId=' + ${tour.id} + '&page=' + ${participants.number + 1}"></a>
                                             </li>
-                                            <li th:if="${participants.number + 2 < participants.totalPages}" class="page-item">
+                                            <li th:if="${participants.number + 2 < participants.totalPages}"
+                                                class="page-item">
                                                 <a class="page-link" href="#" th:text="${participants.number + 3}"
                                                    th:href="'/admin/tours/tour-details?tourId=' + ${tour.id} + '&page=' + ${participants.number + 2}"></a>
                                             </li>
-                                            <li th:if="${participants.number + 1 < participants.totalPages}" class="page-item">
+                                            <li th:if="${participants.number + 1 < participants.totalPages}"
+                                                class="page-item">
                                                 <a class="page-link"
                                                    th:href="'/admin/tours/tour-details?tourId=' + ${tour.id} + '&page=' + ${participants.totalPages - 1}">>></a>
                                             </li>
@@ -146,7 +156,7 @@
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="/static/custom-js/general/check-notifications.js"></script>
-<script src="/static/custom-js/admin/delete-exercise.js"></script>
+<script src="/static/custom-js/admin/remove-participant-from-tour.js"></script>
 <!-- End custom js for this page-->
 </body>
 

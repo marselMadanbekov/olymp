@@ -79,4 +79,9 @@ public class OlympiadStorageImpl implements OlympiadStorage {
     public List<Tour> findAllToursByOlympiad(Olympiad olympiad) {
         return tourRepository.findByOlympiad(olympiad);
     }
+
+    @Override
+    public List<Tour> findAllTours() {
+        return tourRepository.findAll();
+    }
 }

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         item.addEventListener("click",function (event){
             event.preventDefault();
 
-            if(confirm("Вы уверены что хотите удалить тур?")){
+            if(confirm("Вы уверены что хотите удалить задания?")){
                 let formData = new FormData();
                 let tourId = item.getAttribute("tourId");
                 formData.append("tourId", tourId);

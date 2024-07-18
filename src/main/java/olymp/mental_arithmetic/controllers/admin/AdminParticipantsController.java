@@ -2,6 +2,7 @@ package olymp.mental_arithmetic.controllers.admin;
 
 import olymp.mental_arithmetic.model.entities.Level;
 import olymp.mental_arithmetic.model.entities.Participant;
+import olymp.mental_arithmetic.model.entities.Tour;
 import olymp.mental_arithmetic.model.utils.UserCreate;
 import olymp.mental_arithmetic.model.utils.UserdataUpdate;
 import olymp.mental_arithmetic.services.olympiad.OlympiadStorage;
@@ -45,10 +46,27 @@ public class AdminParticipantsController {
     public String participantDetails(@RequestParam Long participantId,
                                      Model model){
         Participant participant = userStorage.getParticipantById(participantId);
-
+        List<Tour> tours = olympiadStorage.findAllTours();
+        List<Level> levels = olympiadStorage.findAllLevels();
         model.addAttribute("participant", participant);
+        model.addAttribute("levels", levels);
+        model.addAttribute("tours", tours);
         return "admin/participant-details";
 
+    }
+
+    @PostMapping("/apply-tour")
+    public ResponseEntity<Map<String,String>> applyTour(@RequestParam Long participantId,
+                                                        @RequestParam Long tourId){
+        Map<String,String> response = new HashMap<>();
+        try{
+            userService.applyParticipantTour(participantId, tourId);
+            response.put("message","Участник успешно зачислен!");
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PostMapping("/update-user-data")
@@ -61,6 +79,20 @@ public class AdminParticipantsController {
         }catch (Exception e){
             response.put("error", e.getMessage());
             e.printStackTrace();
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @PostMapping("/set-level")
+    public ResponseEntity<Map<String,String>> setLevel(@RequestParam Long participantId,
+                                                       @RequestParam Long levelId){
+        Map<String,String> response = new HashMap<>();
+        try{
+            userService.setLevelParticipant(participantId,levelId);
+            response.put("message", "Уровень успешно назначен!");
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            response.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }

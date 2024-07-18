@@ -15,4 +15,8 @@ public interface UserService {
     void applyTempUser(Long tempUserId);
 
     void rejectTempUser(Long tempUserId);
+
+    void applyParticipantTour(Long participantId, Long tourId);
+
+    void setLevelParticipant(Long participantId, Long levelId);
 }

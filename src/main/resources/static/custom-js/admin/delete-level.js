@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.location.reload();
                     },
                     error: function (xhr) {
-                        document.getElementById("spinner").hidden = true;
                         try {
                             const errorData = JSON.parse(xhr.responseText);
                             if (errorData.hasOwnProperty("error")) {

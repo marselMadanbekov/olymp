@@ -133,9 +133,9 @@
                                             </th>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="tour,i : ${tours}">
+                                        <tr th:each="tour: ${tours}">
                                             <td>
-                                                <a th:text="${i.index+1}"></a>
+                                                <a th:text="${tour.name}"></a>
                                             </td>
                                             <td th:text="${tour.startDateTime}"></td>
                                             <td th:text="${tour.endDateTime}"></td>
@@ -165,7 +165,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form class="forms-sample" id="update-group-form">
-                                    <input id="groupId" name="groupId" th:value="${olympiad.id}" hidden>
+                                    <input id="olympiadId" name="olympiadId" th:value="${olympiad.id}" hidden>
                                     <div class="form-group">
                                         <label for="name">Название</label>
                                         <input type="text" class="form-control" name="name" id="name"
@@ -173,7 +173,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="cost">Цена</label>
-                                        <input type="number" class="form-control" name="name" id="cost"
+                                        <input type="number" class="form-control" name="cost" id="cost"
                                                placeholder="Цена">
                                     </div>
 
@@ -212,7 +212,7 @@
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="/static/custom-js/general/check-notifications.js"></script>
-<script src="/static/custom-js/admin/delete-exercise.js"></script>
+<script src="/static/custom-js/admin/delete-tour.js"></script>
 <!-- End custom js for this page-->
 </body>
 

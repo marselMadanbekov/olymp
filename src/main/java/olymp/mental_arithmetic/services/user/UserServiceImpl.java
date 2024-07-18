@@ -1,9 +1,6 @@
 package olymp.mental_arithmetic.services.user;
 
-import olymp.mental_arithmetic.model.entities.Level;
-import olymp.mental_arithmetic.model.entities.Participant;
-import olymp.mental_arithmetic.model.entities.TempUser;
-import olymp.mental_arithmetic.model.entities.User;
+import olymp.mental_arithmetic.model.entities.*;
 import olymp.mental_arithmetic.model.enums.Role;
 import olymp.mental_arithmetic.model.utils.UserCreate;
 import olymp.mental_arithmetic.model.utils.UserdataUpdate;
@@ -128,5 +125,24 @@ public class UserServiceImpl implements UserService {
     public void rejectTempUser(Long tempUserId) {
         TempUser tempUser = userStorage.getTempUserById(tempUserId);
         userStorage.deleteUserById(tempUser.getUser().getId());
+    }
+
+    @Override
+    public void applyParticipantTour(Long participantId, Long tourId) {
+        Participant participant = userStorage.getParticipantById(participantId);
+        Tour tour = olympiadStorage.getTourById(tourId);
+
+        participant.setTour(tour);
+
+        userStorage.saveParticipant(participant);
+    }
+
+    @Override
+    public void setLevelParticipant(Long participantId, Long levelId) {
+        Participant participant = userStorage.getParticipantById(participantId);
+        Level level = olympiadStorage.getLevelById(levelId);
+
+        participant.setLevel(level);
+        userStorage.saveParticipant(participant);
     }
 }
